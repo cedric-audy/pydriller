@@ -22,7 +22,7 @@ from datetime import datetime
 from enum import Enum
 from pathlib import Path
 from typing import Any, List, Set, Dict, Tuple, Optional, Union
-
+from functools import lru_cache
 import hashlib
 
 import lizard
@@ -667,6 +667,7 @@ class Commit:
         return str(self._c_object.message.strip())
 
     @property
+    @lru_cache(maxsize=None)
     def parents(self) -> List[str]:
         """
         Return the list of parents SHAs.
@@ -687,6 +688,7 @@ class Commit:
         """
         return len(self._c_object.parents) > 1
 
+    @lru_cache(maxsize=None)
     def _stats(self):
         if len(self.parents) == 0:
             text = self._conf.get('git').repo.git.diff_tree(self.hash, "--", numstat=True, root=True)
@@ -812,6 +814,7 @@ class Commit:
         return self._conf.get("main_branch") in self.branches
 
     @property
+    @lru_cache(maxsize=None)
     def branches(self) -> Set[str]:
         """
         Return the set of branches that contain the commit.

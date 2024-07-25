@@ -26,7 +26,7 @@ def get_version():
 
 
 setup(
-    name='PyDriller',
+    name='PyDriller-Cedric-Version',
     description='Framework for MSR',
     long_description=long_description,
     author='Davide Spadini',
